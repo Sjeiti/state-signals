@@ -2,5 +2,13 @@
   "name": "state-signals",
   "version": "1.0.0",
   "main": "src/signal.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.21.5",
+    "babel": "^6.23.0",
+    "jest": "^29.5.0"
+  }
 }
