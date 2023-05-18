@@ -1,0 +1,6 @@
+{
+  "name": "state-signals",
+  "version": "1.0.0",
+  "main": "src/signal.js",
+  "license": "MIT"
+}
