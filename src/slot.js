@@ -1,5 +1,7 @@
 /**
- * @typedef Slot {object}
+ * A slot used in a signal
+ * Contains the listener function and a reference to the related signal
+ * @namespace Slot
  */
 const slotPrototype = {
   /**
@@ -22,7 +24,9 @@ const slotPrototype = {
 
 /**
  * Factory method to create a slot
- * @param listener {Function}
+ * @param {Function} listener
+ * @param {Signal} signal
+ * @param {boolean} [once=false]
  * @returns {Slot}
  */
 export function createSlot(listener, signal, once=false) {
@@ -30,6 +34,7 @@ export function createSlot(listener, signal, once=false) {
     /**
      * @memberof Slot#
      * @type {Function}
+     * @private
      */
     _listener: {
       writable: false, value: listener
@@ -37,6 +42,7 @@ export function createSlot(listener, signal, once=false) {
     /**
      * @memberof Slot#
      * @type {Signal}
+     * @private
      */
     _signal: {
       writable: true, value: signal
@@ -44,7 +50,7 @@ export function createSlot(listener, signal, once=false) {
     /**
      * Listener can be executed only once
      * @memberof Slot#
-     * @type {Signal}
+     * @type {boolean}
      */
     once: {
       writable: false, value: once
@@ -52,7 +58,7 @@ export function createSlot(listener, signal, once=false) {
     /**
      * Slot is bound to a signal
      * @memberof Slot#
-     * @type {Signal}
+     * @type {boolean}
      */
     isBound: {
       get: function(){ return !!this._signal }

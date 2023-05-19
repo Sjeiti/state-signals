@@ -109,7 +109,6 @@ describe('signal', ()=>{
 
     it('should remove all listeners', ()=>{
       const signal = createSignal()
-      let count = 0
       signal.addOnce(getNoop())
       signal.add(getNoop())
       signal.add(getNoop())

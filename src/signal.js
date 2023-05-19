@@ -1,16 +1,17 @@
 import {createSlot} from './slot'
 
 /**
- * A signal instance that returns the current value.
- * @name Signal
- * @function
+ * A signal instance that returns the current value when called as a function.
+ * @namespace Signal
+ * @type {Function}
+ * @returns {any}
  */
 const signalPrototype = {
   /**
    * Add listener to signal
    * @memberof Signal#
-   * @param listener {Function} The listener to be executed when the signal dispatches
-   * @param [once=false] {boolean} Executes the listener only once when set to true
+   * @param {Function} listener The listener to be executed when the signal dispatches
+   * @param {boolean} [once=false] Executes the listener only once when set to true
    * @returns {Slot}
    */
   add(listener, once=false) {
@@ -25,7 +26,7 @@ const signalPrototype = {
   /**
    * Add listener to signal
    * @memberof Signal#
-   * @param listener {Function} The listener to be executed when the signal dispatches
+   * @param {Function} listener The listener to be executed when the signal dispatches
    * @returns {Slot}
    */
   addOnce(listener) {
@@ -45,7 +46,7 @@ const signalPrototype = {
    * Dispatch the signal
    * The `values` parameter can be empty, a single value, or an array of values. The listener is executed with these values as parameters.
    * @memberof Signal#
-   * @param values {any[]}
+   * @param {any[]} values
    * @returns {Signal}
    */
   dispatch(...values) {
@@ -67,8 +68,8 @@ const signalPrototype = {
 }
 
 /**
- * actory method to create a signal
- * @param values {any[]}
+ * Factory method to create a signal
+ * @param {any[]} [values] Values to initialise the signals state with
  * @returns {Signal}
  */
 export function createSignal(...values) {
@@ -76,6 +77,7 @@ export function createSignal(...values) {
     /**
      * @memberof Signal#
      * @type {any}
+     * @private
      */
     _values: {
       writable: false, value: values
@@ -83,6 +85,7 @@ export function createSignal(...values) {
     /**
      * @memberof Signal#
      * @type {Slot[]}
+     * @private
      */
     _slots: {
       writable: false, value: []
