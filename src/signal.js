@@ -1,7 +1,7 @@
 import {createSlot} from './slot'
 
 /**
- * A signal
+ * A signal instance that returns the current value.
  * @name Signal
  * @function
  */
@@ -9,8 +9,8 @@ const signalPrototype = {
   /**
    * Add listener to signal
    * @memberof Signal#
-   * @param listener {Function}
-   * @param once {boolean}
+   * @param listener {Function} The listener to be executed when the signal dispatches
+   * @param [once=false] {boolean} Executes the listener only once when set to true
    * @returns {Slot}
    */
   add(listener, once=false) {
@@ -25,7 +25,7 @@ const signalPrototype = {
   /**
    * Add listener to signal
    * @memberof Signal#
-   * @param listener {Function}
+   * @param listener {Function} The listener to be executed when the signal dispatches
    * @returns {Slot}
    */
   addOnce(listener) {
@@ -43,6 +43,7 @@ const signalPrototype = {
   },
   /**
    * Dispatch the signal
+   * The `values` parameter can be empty, a single value, or an array of values. The listener is executed with these values as parameters.
    * @memberof Signal#
    * @param values {any[]}
    * @returns {Signal}
@@ -58,15 +59,15 @@ const signalPrototype = {
   /**
    * Test if listener was added
    * @memberof Signal#
-   * @returns {number}
+   * @returns {boolean}
    */
   has(listener){
-    return this._slots.find(slot=>slot._listener===listener)!==undefined // todo: will fail for addOnce
+    return this._slots.find(slot=>slot._listener===listener)!==undefined
   }
 }
 
 /**
- * Factory method to create a signal
+ * actory method to create a signal
  * @param values {any[]}
  * @returns {Signal}
  */

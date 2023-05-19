@@ -79,7 +79,8 @@ describe('signal', ()=>{
     it('should only dispatch once', ()=>{
       const signal = createSignal()
       let count = 0
-      signal.addOnce(()=>count++)
+      const listener = ()=>count++
+      signal.addOnce(listener)
       expect(signal.length).toBe(1)
       expect(count).toBe(0)
       signal.dispatch()
@@ -88,6 +89,18 @@ describe('signal', ()=>{
       signal.dispatch()
       expect(signal.length).toBe(0)
       expect(count).toBe(1)
+
+      const slot1 = signal.addOnce(listener)
+      expect(signal.length).toBe(1)
+      expect(slot1).toBeDefined()
+      const slot2 = signal.addOnce(listener)
+      expect(signal.length).toBe(1)
+      expect(slot2).toBeUndefined()
+      slot1.remove()
+      expect(signal.length).toBe(0)
+      const slot3 = signal.addOnce(listener)
+      expect(signal.length).toBe(1)
+      expect(slot3).toBeDefined()
     })
 
   })
@@ -185,6 +198,18 @@ describe('slot', ()=>{
       expect(signal.length).toBe(0)
       const slot = signal.add(noop)
       expect(signal.length).toBe(1)
+      expect(signal.has(noop)).toBe(true)
+      slot.remove()
+      expect(signal.length).toBe(0)
+      expect(signal.has(noop)).toBe(false)
+    })
+
+    it('should be callable multiple times', function () {
+      const signal = createSignal()
+      expect(signal.length).toBe(0)
+      const slot = signal.add(noop)
+      expect(signal.length).toBe(1)
+      slot.remove()
       slot.remove()
       expect(signal.length).toBe(0)
     })
@@ -197,6 +222,23 @@ describe('slot', ()=>{
       const signal = createSignal()
       expect(signal.add(getNoop()).once).toBe(false)
       expect(signal.addOnce(getNoop()).once).toBe(true)
+    })
+
+  })
+
+  describe('.isBound', function () {
+
+    it('should be true when slot is bound to a signal', function () {
+      const signal = createSignal()
+      const slot = signal.add(noop)
+      expect(slot.isBound).toBe(true)
+      slot.remove()
+      expect(slot.isBound).toBe(false)
+
+      const slot1 = signal.addOnce(noop)
+      expect(slot1.isBound).toBe(true)
+      signal.dispatch()
+      expect(slot1.isBound).toBe(false)
     })
 
   })

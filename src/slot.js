@@ -8,9 +8,14 @@ const slotPrototype = {
    * @returns {Slot}
    */
   remove() {
-    const {_slots} = this._signal
-    const slotIndex = _slots.indexOf(this)
-    if (slotIndex!== -1) _slots.splice(slotIndex,1)
+    if (this._signal) {
+      const {_slots} = this._signal
+      const slotIndex = _slots.indexOf(this)
+      if (slotIndex!==-1) {
+        _slots.splice(slotIndex,1)
+        this._signal = null
+      }
+    }
     return this
   }
 }
@@ -37,11 +42,20 @@ export function createSlot(listener, signal, once=false) {
       writable: true, value: signal
     },
     /**
+     * Listener can be executed only once
      * @memberof Slot#
      * @type {Signal}
      */
     once: {
       writable: false, value: once
+    },
+    /**
+     * Slot is bound to a signal
+     * @memberof Slot#
+     * @type {Signal}
+     */
+    isBound: {
+      get: function(){ return !!this._signal }
     }
   })
 }
