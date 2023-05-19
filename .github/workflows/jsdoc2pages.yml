@@ -28,8 +28,21 @@
      - run: yarn && yarn jsdoc
      # Take the above steps
      # Add deploy
-     - name: deploy
-       uses: Sjeiti/jsdoc2pages@v4.2.3
-       with:
-         branch: gh-pages # The branch name of the deployment must be an independent branch. Set it to master for the first time. After the construction is completed, my project files are directly cleared, and only the packaged files are left.
-         folder: docs
+
+   Deploy: 
+     needs: Build # Ensure that the build phase is complete
+     runs-on: ubuntu-latest
+     steps:
+       - name: checkout code
+         uses: actions/checkout@v2
+       - name: download build files
+         uses: actions/download-artifact@v2
+         with:
+           name: build-pages
+           path: build
+       - name: deploy
+         uses: JamesIves/github-pages-deploy-action@v4.2.3
+         with:
+           branch: gh-pages
+           folder: docs 
+           token: "${{ secrets.DEPLOY_TOKEN }}"  
