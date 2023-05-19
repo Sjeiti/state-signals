@@ -9,14 +9,15 @@ const signalPrototype = {
   /**
    * Add listener to signal
    * @memberof Signal#
-   * @param callback {Function}
+   * @param listener {Function}
+   * @param once {boolean}
    * @returns {Slot}
    */
-  add(callback) {
-    (typeof callback==='function')||(throw 'listener is a required param of add() and should be a Function.')
+  add(listener, once=false) {
+    (typeof listener==='function')||(throw 'listener is a required param of add() and should be a Function.')
     let slot
-    if (!this.has(callback)) {
-      slot = createSlot(callback,this)
+    if (!this.has(listener)) {
+      slot = createSlot(listener, this, once)
       this._slots.push(slot)
     }
     return slot
@@ -24,19 +25,11 @@ const signalPrototype = {
   /**
    * Add listener to signal
    * @memberof Signal#
-   * @param callback {Function}
+   * @param listener {Function}
    * @returns {Slot}
    */
-  addOnce(callback) {
-    const slot = createSlot(r,this)
-
-    function r(...values) {
-      callback(...values)
-      slot.remove()
-    }
-
-    this._slots.push(slot)
-    return slot
+  addOnce(listener) {
+    return this.add(listener, true)
   },
   /**
    * Remove all signal listeners
@@ -45,7 +38,7 @@ const signalPrototype = {
    */
   clear() {
     this._slots.forEach(slot => slot._signal = null)
-    this._slots.splice(0,Number.MAX_SAFE_INTEGER)
+    this._slots.splice(0, Number.MAX_SAFE_INTEGER)
     return this
   },
   /**
@@ -55,32 +48,27 @@ const signalPrototype = {
    * @returns {Signal}
    */
   dispatch(...values) {
-    this._values.splice(0,Number.MAX_SAFE_INTEGER,...values)
-    this._slots.forEach(slot => slot._callback(...values))
+    this._values.splice(0, Number.MAX_SAFE_INTEGER, ...values)
+    this._slots.forEach(slot => {
+      slot._listener(...values)
+      slot.once&&slot.remove()
+    })
     return this
   },
   /**
-   * Get the number of listeners
+   * Test if listener was added
    * @memberof Signal#
    * @returns {number}
    */
-  getNumListeners(...values) {
-    return this._slots.length
-  },
-  /**
-   * Test if callback/listener was added
-   * @memberof Signal#
-   * @returns {number}
-   */
-  has(callback){
-    return this._slots.find(slot=>slot._callback===callback)!==undefined // todo: will fail for addOnce
+  has(listener){
+    return this._slots.find(slot=>slot._listener===listener)!==undefined // todo: will fail for addOnce
   }
 }
 
 /**
  * Factory method to create a signal
  * @param values {any[]}
- * @return {Signal}
+ * @returns {Signal}
  */
 export function createSignal(...values) {
   const signalProperties = {
@@ -89,21 +77,29 @@ export function createSignal(...values) {
      * @type {any}
      */
     _values: {
-      writable: false,value: values
+      writable: false, value: values
     },
     /**
      * @memberof Signal#
      * @type {Slot[]}
      */
     _slots: {
-      writable: false,value: []
+      writable: false, value: []
+    },
+    /**
+     The number of listeners added
+     * @memberof Signal#
+     * @type {number}
+     */
+    length: {
+      get: function(){ return this._slots.length }
     }
   }
-  const inst = Object.create(signalPrototype,signalProperties)
+  const inst = Object.create(signalPrototype, signalProperties)
   return Object.defineProperties(() => {
     const {_values} = inst
     return _values.length===1?_values[0]:_values
-  },Object.keys({...signalPrototype,...signalProperties}).reduce((acc,key) => {
+  }, Object.keys({...signalPrototype, ...signalProperties}).reduce((acc, key) => {
     acc[key] = {get: () => inst[key]}
     return acc
   },{}))

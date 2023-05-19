@@ -5,33 +5,43 @@ const slotPrototype = {
   /**
    * Remove signal listener
    * @memberof Slot#
+   * @returns {Slot}
    */
   remove() {
     const {_slots} = this._signal
     const slotIndex = _slots.indexOf(this)
     if (slotIndex!== -1) _slots.splice(slotIndex,1)
+    return this
   }
 }
 
 /**
  * Factory method to create a slot
- * @param callback {Function}
- * @return {Slot}
+ * @param listener {Function}
+ * @returns {Slot}
  */
-export function createSlot(callback,signal) {
+export function createSlot(listener, signal, once=false) {
   return Object.create(slotPrototype,{
     /**
      * @memberof Slot#
      * @type {Function}
      */
-    _callback: {
-      writable: false,value: callback
-    },/**
+    _listener: {
+      writable: false, value: listener
+    },
+    /**
      * @memberof Slot#
      * @type {Signal}
      */
     _signal: {
-      writable: true,value: signal
+      writable: true, value: signal
+    },
+    /**
+     * @memberof Slot#
+     * @type {Signal}
+     */
+    once: {
+      writable: false, value: once
     }
   })
 }
