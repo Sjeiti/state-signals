@@ -1,3 +1,8 @@
 /temp/test.js
 /yarn-error.log
 /node_modules/
+
+# vim
+*~
+*.swp
+*.swo
