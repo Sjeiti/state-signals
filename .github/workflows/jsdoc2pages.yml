@@ -26,3 +26,10 @@
      # - run: yarn build
      # Abbreviated as
      - run: yarn && yarn jsdoc
+     # Take the above steps
+     # Add deploy
+     - name: deploy
+       uses: Sjeiti/jsdoc2pages@v4.2.3
+       with:
+         branch: gh-pages # The branch name of the deployment must be an independent branch. Set it to master for the first time. After the construction is completed, my project files are directly cleared, and only the packaged files are left.
+         folder: docs
