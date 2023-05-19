@@ -4,7 +4,7 @@
   "main": "src/signal.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest ./src"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.21.5",
