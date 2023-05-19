@@ -1,4 +1,4 @@
-import {createSignal} from './singal'
+import {createSignal} from './signal'
 import {createSlot} from './slot'
 
 const noop = ()=>{}
@@ -6,10 +6,6 @@ const getNoop = ()=>()=>{}
 const addThrowMessage = 'listener is a required param of add() and should be a Function.'
 
 describe('signal', ()=>{
-
-  beforeEach(function(){
-    this.signal = createSignal()
-  })
 
   describe('createSignal', ()=>{
 
@@ -37,13 +33,13 @@ describe('signal', ()=>{
   describe('add', () => {
 
     it('should return a slot', ()=>{
-      const {signal} = this
+      const signal = createSignal()
       const slot = signal.add(noop)
       expect(slot.__proto__).toBe(createSlot({}).__proto__)
     })
 
     it('should increase number of listeners', ()=>{
-      const {signal} = this
+      const signal = createSignal()
       expect( signal.getNumListeners() ).toBe( 0 )
       signal.add(getNoop())
       expect( signal.getNumListeners() ).toBe( 1 )
@@ -52,7 +48,7 @@ describe('signal', ()=>{
     })
 
     it('should not add same listener twice', ()=>{
-      const {signal} = this
+      const signal = createSignal()
       signal.add(noop)
       const lastSlot = signal.add(noop)
       expect( signal.getNumListeners() ).toBe( 1 )
@@ -61,7 +57,7 @@ describe('signal', ()=>{
 
 
     it('should throw error if listener isn\'t a function', ()=>{
-      const {signal} = this
+      const signal = createSignal()
       expect(()=>signal.add()).toThrow(addThrowMessage)
       expect(()=>signal.add(123)).toThrow(addThrowMessage)
       expect(()=>signal.add(true)).toThrow(addThrowMessage)
