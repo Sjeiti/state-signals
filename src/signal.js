@@ -13,14 +13,11 @@ const signalPrototype = {
    * @returns {Slot}
    */
   add(callback) {
-    // (typeof callback==='function')||throw new Error('listener is a required param of add() and should be a Function.')
     (typeof callback==='function')||(throw 'listener is a required param of add() and should be a Function.')
-    const {_slots} = this
-    const hasSlotWithCallback = _slots.find(slot=>slot._callback===callback) // todo: will fail for addOnce
     let slot
-    if (hasSlotWithCallback===undefined) {
+    if (!this.has(callback)) {
       slot = createSlot(callback,this)
-      _slots.push(slot)
+      this._slots.push(slot)
     }
     return slot
   },
@@ -69,6 +66,14 @@ const signalPrototype = {
    */
   getNumListeners(...values) {
     return this._slots.length
+  },
+  /**
+   * Test if callback/listener was added
+   * @memberof Signal#
+   * @returns {number}
+   */
+  has(callback){
+    return this._slots.find(slot=>slot._callback===callback)!==undefined // todo: will fail for addOnce
   }
 }
 

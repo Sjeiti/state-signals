@@ -66,7 +66,19 @@ describe('signal', ()=>{
 
   })
 
+  describe('has()', function () {
+
+    it('it should check if signal has listener', function () {
+      const signal = createSignal()
+      expect(signal.has(noop)).toBe(false)
+      signal.add(noop)
+      expect(signal.has(noop)).toBe(true)
+    })
+
+  })
+
 })
+
 
 
 //
