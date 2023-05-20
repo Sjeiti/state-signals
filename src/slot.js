@@ -34,6 +34,7 @@ export function createSlot(listener, signal, once=false) {
     /**
      * @memberof Slot#
      * @type {Function}
+     * @readonly
      * @private
      */
     _listener: {
@@ -51,6 +52,7 @@ export function createSlot(listener, signal, once=false) {
      * Listener can be executed only once
      * @memberof Slot#
      * @type {boolean}
+     * @readonly
      */
     once: {
       writable: false, value: once
@@ -59,6 +61,7 @@ export function createSlot(listener, signal, once=false) {
      * Slot is bound to a signal
      * @memberof Slot#
      * @type {boolean}
+     * @readonly
      */
     isBound: {
       get: function(){ return !!this._signal }

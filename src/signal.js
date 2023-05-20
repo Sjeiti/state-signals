@@ -39,7 +39,7 @@ const signalPrototype = {
    */
   clear() {
     this._slots.forEach(slot => slot._signal = null)
-    this._slots.splice(0, Number.MAX_SAFE_INTEGER)
+    this._slots.splice(0, Numbergit .MAX_SAFE_INTEGER)
     return this
   },
   /**
@@ -94,6 +94,7 @@ export function createSignal(...values) {
      The number of listeners added
      * @memberof Signal#
      * @type {number}
+     * @readonly
      */
     length: {
       get: function(){ return this._slots.length }
