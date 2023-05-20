@@ -5,6 +5,7 @@
        - master
 
  jobs:
+ 
    build:
      runs-on: ubuntu-latest
      steps:
@@ -15,10 +16,9 @@
        with:
          node: 16.14
      - run: yarn && yarn jsdoc
-     - name: Archive production artifacts
-       uses: actions/upload-artifact@v3
+     - name: Github-pages artifact
+       uses: actions/upload-pages-artifact@v1
        with:
-         name: github-pages
          path: docs
            
    deploy: 
