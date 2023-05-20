@@ -1,8 +1,13 @@
 {
   "name": "state-signals",
+  "description": "A Signal/Slot implementation that retains state.",
   "version": "1.0.0",
-  "main": "src/signal.js",
   "license": "MIT",
+  "main": "src/signal.js",
+  "files": [
+    "src/signal.js",
+    "src/slot.js"
+  ],
   "scripts": {
     "test": "jest ./src",
     "test:watch": "chokidar \"./src/*.js\" -c \"yarn test\"",
