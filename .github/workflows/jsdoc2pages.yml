@@ -5,7 +5,7 @@
        - master
 
  jobs:
-   Build:
+   build:
      runs-on: ubuntu-latest
      steps:
      - name: checkout code
@@ -21,20 +21,25 @@
          name: github-pages
          path: docs
            
-   Deploy: 
-     needs: Build
-     runs-on: ubuntu-latest
-     steps:
-       - name: checkout code
-         uses: actions/checkout@v2
-       - name: download build files
-         uses: actions/download-artifact@v2
-         with:
-           name: build-pages
-           path: docs
-       - name: deploy
-         uses: JamesIves/github-pages-deploy-action@v4.2.3
-         with:
-           branch: gh-pages
-           folder: docs 
-           token: "${{ secrets.DEPLOY_TOKEN }}"  
+   deploy: 
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+ 
+ 
+ 
