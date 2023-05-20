@@ -15,7 +15,12 @@
        with:
          node: 16.14
      - run: yarn && yarn jsdoc
-
+     - name: Archive production artifacts
+       uses: actions/upload-artifact@v3
+       with:
+         name: github-pages
+         path: docs
+           
    Deploy: 
      needs: Build
      runs-on: ubuntu-latest
