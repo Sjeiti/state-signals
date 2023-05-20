@@ -1,36 +1,23 @@
- # Displayed workflow name
  name: JSDoc to pages
  on: 
-   # Push to the master branch to start packaging
    push:
      branches:
        - master
 
  jobs:
-   # Start packing
    Build:
      runs-on: ubuntu-latest
      steps:
      - name: checkout code
-       # The version of the process triggered by the move out allows the following workflow to access it
        uses: actions/checkout@v2
-       # Setup node can provide node environment, specify node version and npm /yarn cache
      - name: actions/setup-node@v2
        uses: actions/setup-node@v2   
        with:
          node: 16.14
-     # The initial npm packaging event was too long, so I thought about using yarn. As a result, I didn't look at the documents carefully. Yarn didn't need to install the files on ubuntu 
-     # - name: install yarn 
-     #  uses: npm install yarn     
-     # - run: yarn install
-     # - run: yarn build
-     # Abbreviated as
      - run: yarn && yarn jsdoc
-     # Take the above steps
-     # Add deploy
 
    Deploy: 
-     needs: Build # Ensure that the build phase is complete
+     needs: Build
      runs-on: ubuntu-latest
      steps:
        - name: checkout code
@@ -39,7 +26,7 @@
          uses: actions/download-artifact@v2
          with:
            name: build-pages
-           path: build
+           path: docs
        - name: deploy
          uses: JamesIves/github-pages-deploy-action@v4.2.3
          with:
