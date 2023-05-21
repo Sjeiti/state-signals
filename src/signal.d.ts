@@ -1,9 +1,11 @@
+import {Slot} from './slot'
+
 /**
  * Factory method to create a signal
  * @param {any[]} [values] Values to initialise the signals state with
  * @returns {Signal}
  */
-export function createSignal(...values?: any[]): Signal;
+export function createSignal(...values: any[]): Signal;
 
 /**
  * A signal instance that returns the current value when called as a function.
@@ -21,7 +23,7 @@ export interface Signal {
    * @param {boolean} [once=false] Executes the listener only once when set to true
    * @returns {Slot}
    */
-  add: (listener, once=false)=>Slot
+  add: (listener, once)=>Slot
 
   /**
    * Add listener to signal
@@ -37,7 +39,7 @@ export interface Signal {
    * @returns {Signal}
    */
   clear: ()=>Signal
-  
+
   /**
    * Dispatch the signal
    * The `values` parameter can be empty, a single value, or an array of values. The listener is executed with these values as parameters.
@@ -46,7 +48,7 @@ export interface Signal {
    * @returns {Signal}
    */
   dispatch: (...values)=>Signal
-  
+
   /**
    * Test if listener was added
    * @memberof Signal#

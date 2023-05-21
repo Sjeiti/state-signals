@@ -1,3 +1,5 @@
+import {Signal} from './signal'
+
 /**
  * Factory method to create a slot
  * @param {Function} listener
@@ -13,12 +15,13 @@ export function createSlot(listener: Function, signal: Signal, once?: boolean): 
  * @namespace Slot
  */
 interface Slot {
-  /**                                                   * Remove signal listener
+  /**
+   * Remove signal listener
    * @memberof Slot#
    * @returns {Slot}
    */
-  remove: ()=>Slot                                             if (this._signal) {
-  
+  remove: ()=>Slot
+
   /**
    * Listener can be executed only once
    * @memberof Slot#
