@@ -23,7 +23,7 @@ export interface Signal {
    * @param {boolean} [once=false] Executes the listener only once when set to true
    * @returns {Slot}
    */
-  add: (listener, once)=>Slot
+  add: (listener, once?)=>Slot
 
   /**
    * Add listener to signal
