@@ -117,6 +117,13 @@ describe('signal', ()=>{
       expect(signal.length).toBe(0)
     })
 
+    it('should be chainable', function () {
+      const value = createSignal(3)
+          .clear()
+          ()
+      expect(value).toBe(3)
+    })
+
   })
 
   describe('.has()', function () {
@@ -149,6 +156,13 @@ describe('signal', ()=>{
       signal.add((a, b, c)=>dispatchedValue=a+b+c)
       signal.dispatch(1, 2, 3)
       expect(dispatchedValue).toBe(6)
+    })
+
+    it('should be chainable', function () {
+      const value = createSignal(3)
+          .dispatch(77)
+          ()
+      expect(value).toBe(77)
     })
 
   })

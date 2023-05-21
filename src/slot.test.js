@@ -42,6 +42,13 @@ describe('slot', ()=>{
       expect(signal.length).toBe(0)
     })
 
+    it('should be chainable', function () {
+      const signal = createSignal()
+      signal.add(noop)
+          .remove()
+          .remove()
+    })
+
   })
 
   describe('.once', function () {
