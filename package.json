@@ -8,6 +8,7 @@
     "src/signal.js",
     "src/slot.js"
   ],
+  "typings": "./index.d.ts",
   "scripts": {
     "test": "jest ./src",
     "test:watch": "chokidar \"./src/*.js\" -c \"yarn test\"",
