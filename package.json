@@ -3,7 +3,7 @@
   "description": "A Signal/Slot implementation that retains state.",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "src/signal.js",
+  "main": "dist/index.js",
   "files": [
     "src/signal.js",
     "src/slot.js"
