@@ -9,7 +9,11 @@ Read the [documentation](https://sjeiti.github.io/state-signals/) for more info.
 ## Install
 
 ```bash
-$ npm i -D state-signals
+$ npm i -S state-signals
+```
+or
+```bash
+$ yarn add state-signals -S
 ```
 
 
