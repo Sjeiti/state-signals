@@ -12,15 +12,17 @@ const signalPrototype = {
    * @memberof Signal#
    * @param {Function} listener The listener to be executed when the signal dispatches
    * @param {boolean} [once=false] Executes the listener only once when set to true
+   * @param {boolean} [immediate=false] Executes the listener immediately with current state
    * @returns {Slot}
    */
-  add(listener, once=false) {
+  add(listener, once=false, immediate=false) {
     if (typeof listener!=='function') throw 'listener is a required param of add() and should be a Function.'
     let slot
     if (!this.has(listener)) {
       slot = createSlot(listener, this, once)
       this._slots.push(slot)
     }
+    immediate&&listener(...this._values)
     return slot
   },
   /**

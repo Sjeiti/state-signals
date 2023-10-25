@@ -72,6 +72,14 @@ describe('signal', ()=>{
       expect(count).toBe(2)
     })
 
+    it('should be able to dispatch immediately', ()=>{
+      const signal = createSignal()
+      signal.dispatch(23)
+      let count = 0
+      signal.add(n=>count=n, false, true)
+      expect(count).toBe(23)
+    })
+
   })
 
   describe('.addOnce()', () => {
