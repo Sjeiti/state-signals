@@ -1,17 +1,19 @@
 {
   "name": "state-signals",
   "description": "A Signal/Slot implementation that retains state.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
     "src/signal.js",
-    "src/slot.js"
+    "src/signal.d.ts",
+    "src/slot.js",
+    "src/slot.d.ts",
+    "index.d.ts"
   ],
   "typings": "./index.d.ts",
   "scripts": {
     "test": "jest ./src",
-    "test:md": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "test:watch": "chokidar \"./src/*.js\" -c \"yarn test\"",
     "jsdoc": "jsdoc src README.md -d docs -t node_modules/minami",
     "jsdoc:watch": "chokidar README.md \"./src/*.js\" -c \"yarn jsdoc\"",
