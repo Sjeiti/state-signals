@@ -21,9 +21,10 @@ export interface Signal {
    * @memberof Signal#
    * @param {Function} listener The listener to be executed when the signal dispatches
    * @param {boolean} [once=false] Executes the listener only once when set to true
+   * @param {boolean} [immediate=false] Executes the listener immediately with current state
    * @returns {Slot}
    */
-  add: (listener, once?)=>Slot
+  add: (listener, once?, immediate?)=>Slot
 
   /**
    * Add listener to signal
