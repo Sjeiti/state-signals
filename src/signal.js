@@ -15,7 +15,7 @@ const signalPrototype = {
    * @returns {Slot}
    */
   add(listener, once=false) {
-    (typeof listener==='function')||(throw 'listener is a required param of add() and should be a Function.')
+    if (typeof listener!=='function') throw 'listener is a required param of add() and should be a Function.'
     let slot
     if (!this.has(listener)) {
       slot = createSlot(listener, this, once)
