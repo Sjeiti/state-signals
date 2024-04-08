@@ -195,4 +195,15 @@ describe('signal', ()=>{
 
   })
 
+  describe('.state', function () {
+
+    it('should hold state', function () {
+      const signal = createSignal(1)
+      expect(signal.state).toEqual([1])
+      signal.dispatch(2,3)
+      expect(signal.state).toEqual([2,3])
+    })
+
+  })
+
 })
