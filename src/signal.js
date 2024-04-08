@@ -66,6 +66,14 @@ const signalPrototype = {
    */
   has(listener){
     return this._slots.find(slot=>slot._listener===listener)!==undefined
+  },
+  /**
+   * The current state
+   * @memberof Signal#
+   * @returns {any[]}
+   */
+  get state(){
+    return this._values
   }
 }
 
