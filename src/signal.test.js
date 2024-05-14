@@ -28,6 +28,13 @@ describe('factory', ()=>{
       expect(dispatchCalled).toBe(1)
     })
 
+    it('should return the current value', ()=>{
+      const signal = createSignal(0,0)
+      expect(signal()).toEqual([0,0])
+      signal.dispatch(12,34)
+      expect(signal()).toEqual([12,34])
+    })
+
   })
 
 })
@@ -70,6 +77,20 @@ describe('signal', ()=>{
       signal.dispatch()
       expect(signal.length).toBe(1)
       expect(count).toBe(2)
+    })
+
+    it('should dispatch only once', ()=>{
+      const signal = createSignal()
+      let count = 0
+      signal.add(()=>count++, true)
+      expect(signal.length).toBe(1)
+      expect(count).toBe(0)
+      signal.dispatch()
+      expect(signal.length).toBe(0)
+      expect(count).toBe(1)
+      signal.dispatch()
+      expect(signal.length).toBe(0)
+      expect(count).toBe(1)
     })
 
     it('should be able to dispatch immediately', ()=>{
@@ -202,6 +223,23 @@ describe('signal', ()=>{
       expect(signal.state).toEqual([1])
       signal.dispatch(2,3)
       expect(signal.state).toEqual([2,3])
+    })
+
+  })
+
+  describe('composition', function () {
+
+    it('should stringify', function () {
+
+      const name = createSignal('John Doe')
+      const age = createSignal(30)
+
+      const person = createSignal({name, age})
+
+      age.dispatch(40)
+      expect(person().age()).toEqual(40)
+      expect(`${person().age}`).toEqual('40')
+      expect(person().age.toString()).toEqual('40')
     })
 
   })

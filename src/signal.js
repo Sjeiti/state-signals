@@ -74,6 +74,14 @@ const signalPrototype = {
    */
   get state(){
     return this._values
+  },
+  /**
+   * The current state as a string
+   * @memberof Signal#
+   * @returns {string}
+   */
+  toString(){
+    return this()?.toString()
   }
 }
 

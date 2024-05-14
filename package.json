@@ -1,7 +1,7 @@
 {
   "name": "state-signals",
   "description": "A Signal/Slot implementation that retains state.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
