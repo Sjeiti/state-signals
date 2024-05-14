@@ -30,6 +30,10 @@ describe('slot', ()=>{
       slot.remove()
       expect(signal.length).toBe(0)
       expect(signal.has(noop)).toBe(false)
+      // following should not be possible
+      slot._signal = {_slots:[]}
+      slot.remove()
+      expect(slot.isBound).toBe(true)
     })
 
     it('should be callable multiple times', function () {
