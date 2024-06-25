@@ -1,9 +1,10 @@
 {
   "name": "state-signals",
   "description": "A Signal/Slot implementation that retains state.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "main": "dist/index.js",
+  "type": "module",
   "files": [
     "src/signal.js",
     "src/signal.d.ts",
